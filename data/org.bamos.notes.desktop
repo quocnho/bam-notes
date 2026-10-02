@@ -2,7 +2,7 @@
 Name=Bam Notes
 Comment=Ứng dụng ghi chú và quản trị tri thức dạng khối (Block-based Workspace)
 Exec=/home/quocnho/.local/bin/bam-notes
-Icon=org.bamos.notes
+Icon=/home/quocnho/.local/share/icons/hicolor/512x512/apps/org.bamos.notes.png
 Terminal=false
 Type=Application
 Categories=Office;WordProcessor;Utility;
