@@ -1,0 +1,57 @@
+# ==============================================================================
+# Bam Notes Ignore Configuration for Antigravity & AI Agents
+# Giúp tiết kiệm tối đa Token AI và tăng tốc độ indexing
+# ==============================================================================
+
+# Git internals
+.git/
+
+# Build outputs & binaries
+target/
+dist/
+build/
+bin/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Development environments & Package Managers
+.devenv/
+.direnv/
+.devenv.flake.nix
+node_modules/
+.pnpm-store/
+Cargo.lock
+pnpm-lock.yaml
+devenv.lock
+
+# Binary & heavy static assets
+assets/images/
+assets/fonts/
+assets/icons/
+
+# Database, Vector DB, Logs & Caches
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.log
+logs/
+.cache/
+
+# Backup archives
+*.tar.gz
+*.zip
+*.bamnotes.tar.gz
+
+# Editor & IDE temporary caches
+.vscode/
+.idea/
+*.swp
+*~
+Thumbs.db
+.DS_Store
