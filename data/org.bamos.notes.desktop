@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Bam Notes
+Comment=Ứng dụng ghi chú và quản trị tri thức dạng khối (Block-based Workspace)
+Exec=bam-notes
+Icon=org.bamos.notes
+Terminal=false
+Type=Application
+Categories=Office;WordProcessor;Utility;
+Keywords=notion;note;notes;markdown;workspace;
+StartupWMClass=bam-notes

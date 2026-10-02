@@ -1,8 +1,8 @@
 [package]
-name = "tauri-app"
+name = "bam-notes"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Ứng dụng ghi chú và quản trị tri thức dạng khối cho BamOS"
+authors = ["BamOS Team <contact@bamos.info>"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
