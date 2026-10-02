@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Window
 import "components"
 import "views"
+
 
 Window {
     id: root
@@ -11,13 +11,18 @@ Window {
     color: "transparent"
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
 
-    Component.onCompleted: {
-        x = Screen.width - 420
-        y = Screen.height - 620
+    function reposition() {
+        x = Screen.width - width - 24
+        y = Screen.height - height - 48
     }
+
+    Component.onCompleted: reposition()
+    onWidthChanged: reposition()
+    onHeightChanged: reposition()
 
     Behavior on width { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
     Behavior on height { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
+
 
     DragHandler {
         id: dragHandler

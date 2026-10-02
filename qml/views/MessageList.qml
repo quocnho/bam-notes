@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Controls
 
 ListView {
+
     id: listRoot
     clip: true
     spacing: 10

@@ -19,9 +19,11 @@ qt_add_executable(bam-troly
     src/plugins/tool_registry.hpp
     src/modules/storage/db_manager.cpp
     src/modules/storage/db_manager.hpp
+    src/modules/ai/ai_provider.hpp
     src/modules/ai/llama_engine.cpp
     src/modules/ai/llama_engine.hpp
 )
+
 
 qt_add_qml_module(bam-troly
     URI BamTroly
@@ -37,11 +39,17 @@ qt_add_qml_module(bam-troly
 
 target_include_directories(bam-troly PRIVATE src)
 
+find_package(llama QUIET)
+if (TARGET llama OR TARGET llama::llama)
+    target_compile_definitions(bam-troly PRIVATE BAM_ENABLE_LLAMA=1)
+    target_link_libraries(bam-troly PRIVATE llama)
+endif()
+
 target_link_libraries(bam-troly PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Quick
     Qt6::QuickControls2
-    SQLite::SQLite3
-    llama
+    SQLite3::SQLite3
 )
+

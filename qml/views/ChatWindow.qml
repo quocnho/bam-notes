@@ -1,6 +1,6 @@
 import QtQuick
-import QtQuick.Controls
 import "../components"
+
 
 Rectangle {
     id: chatRoot
@@ -51,15 +51,32 @@ Rectangle {
             }
         }
 
-        Button {
+        Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 12
             anchors.verticalCenter: parent.verticalCenter
-            text: "✕"
-            flat: true
-            onClicked: chatRoot.closeClicked()
+            width: 28
+            height: 28
+            radius: 14
+            color: closeMouse.containsMouse ? "#404040" : "transparent"
+
+            Text {
+                anchors.centerIn: parent
+                text: "✕"
+                color: "#cccccc"
+                font.pixelSize: 14
+            }
+
+            MouseArea {
+                id: closeMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: chatRoot.closeClicked()
+            }
         }
     }
+
 
     MessageList {
         id: msgList
