@@ -18,7 +18,7 @@
 <aside class="sidebar">
   <div class="workspace-header">
     <div class="brand">
-      <HardDrive size={18} class="brand-icon" />
+      <img src="/favicon.png" alt="Bam Notes" class="brand-logo" />
       <span class="brand-title">Bam Notes</span>
     </div>
     <button class="icon-btn" onclick={onCreate} title="Tạo trang mới">
@@ -71,6 +71,11 @@
     align-items: center;
     gap: 8px;
     font-weight: 600;
+  }
+  .brand-logo {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
   }
   .icon-btn {
     background: none;
