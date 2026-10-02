@@ -28,6 +28,13 @@
         TaskItem.configure({ nested: true }),
       ],
       content: initialContent,
+      onFocus: ({ editor }) => {
+        // Tự động xóa nội dung mẫu mặc định khi người dùng click vào soạn thảo
+        const text = editor.getText().trim();
+        if (text === "Bắt đầu viết nội dung tại đây..." || text === "Trang mới") {
+          editor.commands.clearContent();
+        }
+      },
       onUpdate: ({ editor }) => {
         onChange?.(editor.getHTML());
       },
@@ -44,13 +51,6 @@
 </div>
 
 <style>
-  .editor-wrapper {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 3rem;
-  }
-  .tiptap-container {
-    cursor: text;
-  }
+  .editor-wrapper { width: 100%; max-width: 900px; margin: 0 auto; padding: 2rem 3rem; }
+  .tiptap-container { cursor: text; }
 </style>
