@@ -11,9 +11,13 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
     AppController controller;
 
+    engine.setInitialProperties({
+        { "appController", QVariant::fromValue(&controller) }
+    });
     engine.rootContext()->setContextProperty("appController", &controller);
 
     const QUrl url(QStringLiteral("qrc:/BamTroly/qml/Main.qml"));
+
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,

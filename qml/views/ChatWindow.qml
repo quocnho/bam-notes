@@ -4,12 +4,14 @@ import "../components"
 
 Rectangle {
     id: chatRoot
+    property var controller: null
     radius: 16
     color: "#242424"
     border.color: "#383838"
     border.width: 1
 
     signal closeClicked()
+
 
     Rectangle {
         id: header
@@ -40,7 +42,7 @@ Rectangle {
 
             StatusIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                status: appController.isGenerating ? "streaming" : "idle"
+                status: (controller && controller.isGenerating) ? "streaming" : "idle"
             }
 
             Text {
@@ -77,7 +79,6 @@ Rectangle {
         }
     }
 
-
     MessageList {
         id: msgList
         anchors.top: header.bottom
@@ -89,13 +90,15 @@ Rectangle {
 
     PromptInput {
         id: promptInput
+        controller: chatRoot.controller
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: 12
         onSendPrompt: (txt) => {
             msgList.addUserMessage(txt);
-            appController.sendMessage(txt);
+            if (chatRoot.controller) chatRoot.controller.sendMessage(txt);
         }
     }
 }
+

@@ -2,6 +2,7 @@ import QtQuick
 
 Row {
     id: inputRow
+    property var controller: null
     height: 42
     spacing: 8
 
@@ -39,11 +40,11 @@ Row {
         width: 68
         height: parent.height
         radius: 8
-        color: appController.isGenerating ? "#e74c3c" : "#3584e4"
+        color: (controller && controller.isGenerating) ? "#e74c3c" : "#3584e4"
 
         Text {
             anchors.centerIn: parent
-            text: appController.isGenerating ? "Dừng" : "Gửi"
+            text: (controller && controller.isGenerating) ? "Dừng" : "Gửi"
             color: "#ffffff"
             font.bold: true
             font.pixelSize: 13
@@ -54,8 +55,8 @@ Row {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-                if (appController.isGenerating) {
-                    appController.stopGeneration();
+                if (controller && controller.isGenerating) {
+                    controller.stopGeneration();
                 } else if (textInput.text.trim().length > 0) {
                     inputRow.sendPrompt(textInput.text.trim());
                     textInput.text = "";
@@ -64,4 +65,5 @@ Row {
         }
     }
 }
+
 
