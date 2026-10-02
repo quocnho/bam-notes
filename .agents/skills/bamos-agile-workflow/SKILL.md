@@ -28,6 +28,7 @@ Khi người dùng đưa ra yêu cầu mới (qua đoạn chat hoặc viết tro
 - **Độ dài Sprint**: 1-2 tuần tương ứng một mốc phiên bản phát hành `CC` (`vAA.BB.CC`).
 - **Definition of Done (DoD) cho BamOS & BamApps**:
   1. Mã nguồn Nix: `nix flake check` hoặc `nix-instantiate` không có lỗi cú pháp.
-  2. Mã nguồn Rust/Apps: `cargo clippy -- -D warnings` và `cargo fmt --check` vượt qua hoàn hảo.
-  3. Kích thước file: Mỗi file micro-module duy trì < 80 dòng (Nix) và < 100 dòng (Rust/UI).
-  4. Trạng thái Git sạch sẽ, không commit file rác (`result`, `.direnv`, `target/`).
+  2. Mã nguồn C++ & Qt6 (bam-troly): `cmake --build build` thành công, không cảnh báo lỗi, QML load hợp lệ.
+  3. Mã nguồn Rust/Apps: `cargo clippy -- -D warnings` và `cargo fmt --check` vượt qua hoàn hảo.
+  4. Kích thước file: Mỗi file micro-module duy trì < 80 dòng (Nix, QML) và < 100 dòng (C++, Rust).
+  5. Trạng thái Git sạch sẽ, không commit file rác (`result`, `.direnv`, `build/`, `*.gguf`, `*.db`).

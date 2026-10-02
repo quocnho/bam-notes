@@ -36,7 +36,7 @@ Sử dụng quy chuẩn này cho toàn bộ hoạt động quản lý phiên b�
 - `perf(scope)`: Cải thiện hiệu năng khởi động, bộ nhớ
 - `docs(scope)`: Cập nhật tài liệu
 - `chore(scope)`: Nâng cấp flake lock, bump version, cấu hình CI/CD
-- **Scopes phổ biến**: `boot`, `gpu`, `audio`, `gnome`, `installer`, `customizer`, `notes`, `cli`, `assets`, `agile`
+- **Scopes phổ biến**: `troly`, `ui`, `ai`, `storage`, `boot`, `gpu`, `audio`, `gnome`, `installer`, `customizer`, `notes`, `cli`, `agile`
 
 ## 4. Tuyệt Đối Không Commit File Rác (Zero Bloat Invariant)
-- Không commit: `result`, `result-*`, `*.iso`, `.direnv`, `.devenv`, `target/`, `node_modules/`, `*.swp`.
+- Không commit: `result`, `result-*`, `*.iso`, `.direnv`, `.devenv`, `target/`, `build/`, `*.gguf`, `*.db`, `node_modules/`, `*.swp`.

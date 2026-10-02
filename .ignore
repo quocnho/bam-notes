@@ -1,5 +1,5 @@
 # ==============================================================================
-# Bam Notes Ignore Configuration for Antigravity & AI Agents
+# Bam Trợ Lý (bam-troly) Ignore Configuration for Antigravity & AI Agents
 # Giúp tiết kiệm tối đa Token AI và tăng tốc độ indexing
 # ==============================================================================
 
@@ -32,6 +32,13 @@ devenv.lock
 assets/images/
 assets/fonts/
 assets/icons/
+
+# AI Models & Large Weights
+*.gguf
+*.bin
+*.onnx
+*.safetensors
+models/
 
 # Database, Vector DB, Logs & Caches
 *.db

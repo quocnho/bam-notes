@@ -13,6 +13,7 @@ Khi User bắt đầu prompt bằng tiền tố `?<subsystem>:`, `@<subsystem>:`
 
 | Tiền tố | Subsystem | Thư mục mục tiêu | Công nghệ chính |
 | :--- | :--- | :--- | :--- |
+| `?troly` | Bam Trợ Lý Desktop App | [BamApps/bam-troly/](file:///home/quocnho/Projects/Bam/BamApps/bam-troly) | C++20, Qt6 Quick, llama.cpp, SQLite3 |
 | `?os` hoặc `?bamos` | BamOS Core System | [BamOS/](file:///home/quocnho/Projects/Bam/BamOS) | NixOS, Flakes, Home-Manager |
 | `?customizer` | BamOS GUI Customizer | [BamApps/bam-customizer/](file:///home/quocnho/Projects/Bam/BamApps/bam-customizer) | Rust, GTK4, Libadwaita |
 | `?notes` | Bam Notes App | [BamApps/bam-notes/](file:///home/quocnho/Projects/Bam/BamApps/bam-notes) | App ecosystem |
