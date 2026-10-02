@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Bam Trợ Lý
+GenericName=AI Assistant
+Comment=Trợ lý ảo AI Native nổi trong suốt cho BamOS
+Exec=bam-troly
+Icon=dialog-information
+Terminal=false
+Type=Application
+Categories=Utility;System;Office;
+Keywords=AI;Agent;Assistant;LLM;
+StartupNotify=true
