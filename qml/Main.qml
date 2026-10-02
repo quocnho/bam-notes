@@ -13,13 +13,17 @@ Window {
     flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
 
     function updatePos() {
-        x = Screen.desktopAvailableWidth - width - 24
-        y = Screen.desktopAvailableHeight - height - 24
+        var screenW = Screen.desktopAvailableWidth > 0 ? Screen.desktopAvailableWidth : Screen.width
+        var screenH = Screen.desktopAvailableHeight > 0 ? Screen.desktopAvailableHeight : Screen.height
+        x = screenW - width - 24
+        y = screenH - height - 24
     }
 
-    Component.onCompleted: updatePos()
+    Component.onCompleted: Qt.callLater(updatePos)
     onWidthChanged: updatePos()
     onHeightChanged: updatePos()
+    Screen.onWidthChanged: updatePos()
+    Screen.onHeightChanged: updatePos()
 
 
     FloatingBubble {

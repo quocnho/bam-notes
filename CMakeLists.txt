@@ -41,10 +41,21 @@ qt_add_qml_module(bam-troly
 
 target_include_directories(bam-troly PRIVATE src)
 
-find_package(llama QUIET)
-if (TARGET llama OR TARGET llama::llama)
+find_package(PkgConfig QUIET)
+if (PKG_CONFIG_FOUND)
+    pkg_check_modules(LLAMA QUIET llama)
+endif()
+
+if (LLAMA_FOUND)
     target_compile_definitions(bam-troly PRIVATE BAM_ENABLE_LLAMA=1)
-    target_link_libraries(bam-troly PRIVATE llama)
+    target_include_directories(bam-troly PRIVATE ${LLAMA_INCLUDE_DIRS})
+    target_link_libraries(bam-troly PRIVATE ${LLAMA_LIBRARIES})
+else()
+    find_package(llama QUIET)
+    if (TARGET llama OR TARGET llama::llama)
+        target_compile_definitions(bam-troly PRIVATE BAM_ENABLE_LLAMA=1)
+        target_link_libraries(bam-troly PRIVATE llama)
+    endif()
 endif()
 
 target_link_libraries(bam-troly PRIVATE

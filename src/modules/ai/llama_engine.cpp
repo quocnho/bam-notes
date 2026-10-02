@@ -15,7 +15,7 @@ LlamaEngine::~LlamaEngine() {
     stop();
 #ifdef BAM_ENABLE_LLAMA
     if (m_ctx) llama_free((llama_context*)m_ctx);
-    if (m_model) llama_free_model((llama_model*)m_model);
+    if (m_model) llama_model_free((llama_model*)m_model);
     llama_backend_free();
 #endif
 }
@@ -23,12 +23,12 @@ LlamaEngine::~LlamaEngine() {
 bool LlamaEngine::loadModel(const QString &modelPath) {
 #ifdef BAM_ENABLE_LLAMA
     llama_model_params model_params = llama_model_default_params();
-    m_model = (llama_model*)llama_load_model_from_file(modelPath.toUtf8().constData(), model_params);
+    m_model = (llama_model*)llama_model_load_from_file(modelPath.toUtf8().constData(), model_params);
     if (!m_model) return false;
 
     llama_context_params ctx_params = llama_context_default_params();
     ctx_params.n_ctx = 2048;
-    m_ctx = (llama_context*)llama_new_context_with_model((llama_model*)m_model, ctx_params);
+    m_ctx = (llama_context*)llama_init_from_model((llama_model*)m_model, ctx_params);
     return m_ctx != nullptr;
 #else
     Q_UNUSED(modelPath);
