@@ -18,3 +18,10 @@ Lưu trữ lịch sử các ý tưởng đã được người dùng xác nhận
 - **Mục tiêu:** Trải nghiệm trợ lý ảo bay bổng, không viền cửa sổ, mượt mà trên mọi nền tảng, phản ứng thông minh với sự kiện hệ thống.
 - **Subsystem liên quan:** `ui` (Transparent Drag Window), `ai` (OpenClaw ReAct runner), `core` (Hybrid Provider & Network Sync).
 
+### [IDEA-BAM-TROLY-20261002-03] Tự Động Mở Rộng Và Focus Input Khi Click Bubble
+- **Thời gian tiếp nhận:** 2026-10-02 21:32
+- **Mô tả:** Khi click vào bong bóng nổi (Floating Bubble), kích hoạt mở rộng cửa sổ chat (400x580) đồng thời tự động kích hoạt `forceActiveFocus()` vào ô `TextInput` trong `PromptInput` để người dùng có thể gõ ngay lập tức trên bàn phím.
+- **Mục tiêu:** Tối ưu luồng tương tác UX, cho phép gõ phím tức thì không cần click chuột lần hai.
+- **Subsystem liên quan:** `ui` (Main.qml, ChatWindow.qml, PromptInput.qml).
+
+

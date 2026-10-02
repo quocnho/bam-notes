@@ -26,7 +26,12 @@ Window {
         id: bubble
         anchors.fill: parent
         visible: !appController || !appController.isExpanded
-        onClicked: if (appController) appController.isExpanded = true
+        onClicked: {
+            if (appController) {
+                appController.isExpanded = true
+                Qt.callLater(chatWindow.focusInput)
+            }
+        }
     }
 
     ChatWindow {

@@ -7,6 +7,7 @@ Row {
     spacing: 8
 
     signal sendPrompt(string text)
+    function focusInput() { textInput.forceActiveFocus() }
 
     Rectangle {
         width: parent.width - sendBtn.width - parent.spacing

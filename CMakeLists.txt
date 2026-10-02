@@ -33,6 +33,7 @@ qt_add_qml_module(bam-troly
         qml/components/FloatingBubble.qml
         qml/components/StatusIndicator.qml
         qml/views/ChatWindow.qml
+        qml/views/ChatHeader.qml
         qml/views/MessageList.qml
         qml/views/PromptInput.qml
 )
