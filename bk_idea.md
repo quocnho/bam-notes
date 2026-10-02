@@ -30,5 +30,12 @@ Lưu trữ lịch sử các ý tưởng đã được người dùng xác nhận
 - **Mục tiêu:** Cung cấp khả năng kiểm soát và thoát ứng dụng nhanh chóng, tiện dụng cho người dùng.
 - **Subsystem liên quan:** `ui` (components/ContextMenu.qml, FloatingBubble.qml, ChatHeader.qml, Main.qml).
 
+### [IDEA-BAM-TROLY-20261002-05] Thêm Nút Thu Nhỏ (-) & Hộp Thoại Xác Nhận Đóng Kèm Tùy Chọn Xóa Chat
+- **Thời gian tiếp nhận:** 2026-10-02 22:05
+- **Mô tả:** Bỏ hoàn toàn menu chuột phải (Right-click). Thêm nút thu nhỏ (`−`) cạnh nút đóng (`✕`) trên Header để co về bong bóng tròn (72x72). Khi bấm nút đóng (`✕`), hiển thị hộp thoại xác nhận: "Bạn có muốn xóa dữ liệu đoạn chat trước khi đóng không?" với các tùy chọn Có (Xóa và đóng), Không (Giữ và đóng), và Hủy (tiếp tục sử dụng).
+- **Mục tiêu:** Trực quan hóa thao tác điều khiển cửa sổ và bảo vệ an toàn dữ liệu hội thoại của người dùng.
+- **Subsystem liên quan:** `ui` (ChatHeader.qml, FloatingBubble.qml, ConfirmDialog.qml, ChatWindow.qml, Main.qml).
+
+
 
 

@@ -49,7 +49,8 @@ Khi cài đặt qua Nix derivation, ứng dụng sẽ tự động sinh file des
 - **Mở rộng chat**: Click chuột trái vào bong bóng 🤖.
 - **Tự động Focus**: Con trỏ phím tự động kích hoạt vào ô nhập liệu để bắt đầu gõ lệnh/chat ngay lập tức.
 - **Kéo thả tự do**: Kéo bong bóng hoặc thanh header đến bất kỳ vị trí nào trên màn hình.
-- **Menu chuột phải (Context Menu)**: Click chuột phải vào bong bóng hoặc thanh header để:
-  - 💬 Mở / Thu gọn chat
-  - 🧹 Xoá sạch lịch sử chat
-  - ❌ Đóng ứng dụng hoàn toàn (`Qt.quit()`).
+- **Nút Thu nhỏ (`−`)**: Click vào nút `−` trên thanh Header để thu gọn khung chat về lại bong bóng tròn (72x72).
+- **Nút Đóng (`✕`) & Xác nhận**: Click vào nút `✕` trên thanh Header sẽ mở hộp thoại xác nhận:
+  - **Có (Xóa)**: Xóa sạch dữ liệu lịch sử hội thoại và thoát ứng dụng.
+  - **Không (Giữ)**: Giữ nguyên lịch sử hội thoại và thoát ứng dụng.
+  - **Hủy**: Đóng hộp thoại và tiếp tục sử dụng trợ lý.

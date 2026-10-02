@@ -10,7 +10,7 @@ Rectangle {
     border.width: 1
 
     signal closeClicked()
-    signal rightClicked()
+    signal minimizeClicked()
     function focusInput() { promptInput.focusInput() }
     function clearHistory() { msgList.clearMessages() }
     onVisibleChanged: if (visible) Qt.callLater(focusInput)
@@ -22,7 +22,7 @@ Rectangle {
         anchors.right: parent.right
         controller: chatRoot.controller
         onCloseClicked: chatRoot.closeClicked()
-        onRightClicked: chatRoot.rightClicked()
+        onMinimizeClicked: chatRoot.minimizeClicked()
     }
 
     MessageList {

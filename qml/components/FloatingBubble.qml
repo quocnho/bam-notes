@@ -10,7 +10,6 @@ Rectangle {
     border.width: 2
 
     signal clicked()
-    signal rightClicked()
 
     Text {
         anchors.centerIn: parent
@@ -27,16 +26,9 @@ Rectangle {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: bubbleRoot.scale = 1.10
         onExited: bubbleRoot.scale = 1.0
-        onClicked: (mouse) => {
-            if (mouse.button === Qt.RightButton) {
-                bubbleRoot.rightClicked();
-            } else {
-                bubbleRoot.clicked();
-            }
-        }
+        onClicked: bubbleRoot.clicked()
     }
 
     Behavior on scale {
