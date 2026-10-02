@@ -9,17 +9,20 @@ Rectangle {
     radius: 16
 
     signal closeClicked()
+    signal rightClicked()
 
-    Rectangle {
-        anchors.bottom: parent.bottom
-        width: parent.width
-        height: 16
-        color: "#2e2e2e"
-    }
+    Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 16; color: "#2e2e2e" }
+    DragHandler { target: null; onActiveChanged: if (active) root.startSystemMove() }
 
-    DragHandler {
-        target: null
-        onActiveChanged: if (active) root.startSystemMove()
+    MouseArea {
+        anchors.fill: parent
+        anchors.rightMargin: 44
+        acceptedButtons: Qt.RightButton
+        onClicked: (mouse) => {
+            if (mouse.button === Qt.RightButton) {
+                headerRoot.rightClicked();
+            }
+        }
     }
 
     Row {

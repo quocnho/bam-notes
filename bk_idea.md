@@ -24,4 +24,11 @@ Lưu trữ lịch sử các ý tưởng đã được người dùng xác nhận
 - **Mục tiêu:** Tối ưu luồng tương tác UX, cho phép gõ phím tức thì không cần click chuột lần hai.
 - **Subsystem liên quan:** `ui` (Main.qml, ChatWindow.qml, PromptInput.qml).
 
+### [IDEA-BAM-TROLY-20261002-04] Bổ Sung Context Menu Chuột Phải Cho Trợ Lý (Quick Actions & Quit)
+- **Thời gian tiếp nhận:** 2026-10-02 21:40
+- **Mô tả:** Bổ sung tương tác chuột phải (Right-click) vào biểu tượng bong bóng trợ lý hoặc header để hiển thị menu ngữ cảnh nổi. Cung cấp các thao tác hệ thống nhanh: Mở/thu gọn chat, Xóa lịch sử hội thoại, Khởi động lại trợ lý, và Thoát hoàn toàn ứng dụng (`Qt.quit()`).
+- **Mục tiêu:** Cung cấp khả năng kiểm soát và thoát ứng dụng nhanh chóng, tiện dụng cho người dùng.
+- **Subsystem liên quan:** `ui` (components/ContextMenu.qml, FloatingBubble.qml, ChatHeader.qml, Main.qml).
+
+
 

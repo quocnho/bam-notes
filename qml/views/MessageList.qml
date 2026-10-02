@@ -13,6 +13,10 @@ ListView {
         listRoot.positionViewAtEnd();
     }
 
+    function clearMessages() {
+        messageModel.clear();
+    }
+
     Connections {
         target: appController
         function onTokenReceived(token) {

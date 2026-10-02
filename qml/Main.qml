@@ -32,6 +32,7 @@ Window {
                 Qt.callLater(chatWindow.focusInput)
             }
         }
+        onRightClicked: contextMenu.visible = !contextMenu.visible
     }
 
     ChatWindow {
@@ -40,6 +41,28 @@ Window {
         controller: appController
         visible: !!(appController && appController.isExpanded)
         onCloseClicked: if (appController) appController.isExpanded = false
+        onRightClicked: contextMenu.visible = !contextMenu.visible
+    }
+
+    ContextMenu {
+        id: contextMenu
+        visible: false
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: (appController && appController.isExpanded) ? 8 : 0
+        anchors.bottomMargin: (appController && appController.isExpanded) ? 48 : 72
+        onToggleChat: {
+            visible = false;
+            if (appController) {
+                appController.isExpanded = !appController.isExpanded;
+                if (appController.isExpanded) Qt.callLater(chatWindow.focusInput);
+            }
+        }
+        onClearHistory: {
+            visible = false;
+            chatWindow.clearHistory();
+        }
+        onQuitApp: Qt.quit()
     }
 }
 
