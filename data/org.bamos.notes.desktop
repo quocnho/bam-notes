@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Bam Notes
 Comment=Ứng dụng ghi chú và quản trị tri thức dạng khối (Block-based Workspace)
-Exec=bam-notes
+Exec=/home/quocnho/.local/bin/bam-notes
 Icon=org.bamos.notes
 Terminal=false
 Type=Application
