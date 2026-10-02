@@ -19,13 +19,13 @@ Sử dụng môi trường Nix thông qua `direnv` hoặc `devenv`:
 direnv allow   # hoặc: devenv shell
 
 # 2. Biên dịch dự án
-bam-troly-build
+troly build
 
 # 3. Khởi chạy thử nghiệm
-bam-troly-run
+troly run
 
 # 4. Dọn dẹp bản build
-bam-troly-clean
+troly clean
 ```
 
 > **Cách biên dịch thủ công (bằng CMake):**

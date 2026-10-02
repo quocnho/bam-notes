@@ -27,20 +27,36 @@
     QT_QPA_PLATFORM = "wayland;xcb";
   };
 
-  scripts = {
-    "bam-troly-build".exec = ''
-      cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-      cmake --build build
-    '';
-    "bam-troly-run".exec = ''
-      if [ ! -f "build/bam-troly" ]; then
-        bam-troly-build
-      fi
-      ./build/bam-troly "$@"
-    '';
-    "bam-troly-clean".exec = ''
-      rm -rf build
-      echo "✔ Đã dọn dẹp thư mục build."
-    '';
-  };
+  scripts.troly.exec = ''
+    CMD="''${1:-help}"
+    shift || true
+
+    case "$CMD" in
+      build)
+        echo "🔨 Đang biên dịch bam-troly..."
+        cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+        cmake --build build
+        ;;
+      run)
+        if [ ! -f "build/bam-troly" ]; then
+          echo "🔨 Chưa có bản build, đang biên dịch tự động..."
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+        fi
+        echo "🚀 Khởi chạy bam-troly..."
+        ./build/bam-troly "$@"
+        ;;
+      clean)
+        echo "🧹 Đang dọn dẹp thư mục build..."
+        rm -rf build
+        echo "✔ Đã dọn dẹp hoàn tất."
+        ;;
+      help|*)
+        echo "Cách sử dụng: troly [lệnh]"
+        echo "  troly build   - Biên dịch ứng dụng (CMake + Ninja)"
+        echo "  troly run     - Khởi chạy ứng dụng (tự build nếu chưa có)"
+        echo "  troly clean   - Dọn dẹp thư mục build"
+        ;;
+    esac
+  '';
 }
