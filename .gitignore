@@ -1,0 +1,9 @@
+/target/
+/node_modules/
+/.direnv/
+/.devenv/
+.env
+dist/
+build/
+*.log
+*.tar.gz
