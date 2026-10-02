@@ -7,37 +7,35 @@ Window {
     id: root
     property var appController: null
     visible: true
-    width: Screen.width
-    height: Screen.height
+    width: (appController && appController.isExpanded) ? 400 : 72
+    height: (appController && appController.isExpanded) ? 580 : 72
     color: "transparent"
-    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+    flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
 
-    Component.onCompleted: {
-        x = 0
-        y = 0
+    function updatePos() {
+        x = Screen.desktopAvailableWidth - width - 24
+        y = Screen.desktopAvailableHeight - height - 24
     }
+
+    Component.onCompleted: updatePos()
+    onWidthChanged: updatePos()
+    onHeightChanged: updatePos()
+
 
     FloatingBubble {
         id: bubble
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 24
-        anchors.bottomMargin: 48
+        anchors.fill: parent
         visible: !appController || !appController.isExpanded
         onClicked: if (appController) appController.isExpanded = true
     }
 
     ChatWindow {
         id: chatWindow
-        width: 400
-        height: 580
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 24
-        anchors.bottomMargin: 48
+        anchors.fill: parent
         controller: appController
         visible: !!(appController && appController.isExpanded)
         onCloseClicked: if (appController) appController.isExpanded = false
     }
 }
+
 

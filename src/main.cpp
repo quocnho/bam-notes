@@ -4,6 +4,16 @@
 #include "presentation/app_controller.hpp"
 
 int main(int argc, char *argv[]) {
+    // Under Wayland (xdg-shell), compositors strictly enforce random/top-left placement
+    // for top-level surfaces and forbid client-side positioning.
+    // Using XWayland (xcb) on Linux allows exact corner positioning & seamless floating.
+    if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM")) {
+        const char *sessionType = getenv("XDG_SESSION_TYPE");
+        if (sessionType && strcmp(sessionType, "wayland") == 0) {
+            qputenv("QT_QPA_PLATFORM", "xcb;wayland");
+        }
+    }
+
     QGuiApplication app(argc, argv);
     app.setApplicationName("bam-troly");
     app.setOrganizationName("BamOS");
