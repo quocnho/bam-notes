@@ -5,7 +5,13 @@ ListView {
     id: listRoot
     clip: true
     spacing: 10
-    model: ListModel { id: messageModel }
+    model: ListModel {
+        id: messageModel
+        ListElement {
+            isUser: false
+            content: "Xin chào! Tôi là Bam Trợ Lý (OpenClaw ReAct Agent).\nTôi có thể giúp bạn kiểm tra hệ thống, điều phối tác vụ hoặc giải đáp câu hỏi. Hãy nhập câu hỏi bên dưới!"
+        }
+    }
 
     function addUserMessage(txt) {
         messageModel.append({ "isUser": true, "content": txt });

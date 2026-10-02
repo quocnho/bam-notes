@@ -37,41 +37,32 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 8
 
-            // Có (Xóa và đóng)
             Rectangle {
                 width: 96; height: 32; radius: 6
-                color: yesMouse.containsMouse ? "#c0392b" : "#e74c3c"
+                color: yesM.containsMouse ? "#c0392b" : "#e74c3c"
                 Text { anchors.centerIn: parent; text: "Có (Xóa)"; color: "#ffffff"; font.pixelSize: 12; font.bold: true }
                 MouseArea {
-                    id: yesMouse
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
+                    id: yesM; anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                     onClicked: dialogRoot.confirmed(true)
                 }
             }
 
-            // Không (Giữ và đóng)
             Rectangle {
                 width: 96; height: 32; radius: 6
-                color: noMouse.containsMouse ? "#2980b9" : "#3584e4"
+                color: noM.containsMouse ? "#2980b9" : "#3584e4"
                 Text { anchors.centerIn: parent; text: "Không (Giữ)"; color: "#ffffff"; font.pixelSize: 12; font.bold: true }
                 MouseArea {
-                    id: noMouse
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
+                    id: noM; anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                     onClicked: dialogRoot.confirmed(false)
                 }
             }
 
-            // Hủy
             Rectangle {
                 width: 60; height: 32; radius: 6
-                color: cancelMouse.containsMouse ? "#444444" : "#333333"
+                color: cancelM.containsMouse ? "#444444" : "#333333"
                 Text { anchors.centerIn: parent; text: "Hủy"; color: "#aaaaaa"; font.pixelSize: 12 }
                 MouseArea {
-                    id: cancelMouse
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
+                    id: cancelM; anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                     onClicked: dialogRoot.cancelled()
                 }
             }

@@ -6,11 +6,13 @@ import "views"
 Window {
     id: root
     property var appController: null
+    property bool isPinned: true
     visible: true
     width: (appController && appController.isExpanded) ? 400 : 72
     height: (appController && appController.isExpanded) ? 580 : 72
     color: "transparent"
-    flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+    flags: isPinned ? (Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+                    : (Qt.Tool | Qt.FramelessWindowHint)
 
     function updatePos() {
         var screenW = Screen.desktopAvailableWidth > 0 ? Screen.desktopAvailableWidth : Screen.width
@@ -24,7 +26,6 @@ Window {
     onHeightChanged: updatePos()
     Screen.onWidthChanged: updatePos()
     Screen.onHeightChanged: updatePos()
-
 
     FloatingBubble {
         id: bubble
@@ -42,7 +43,9 @@ Window {
         id: chatWindow
         anchors.fill: parent
         controller: appController
+        isPinned: root.isPinned
         visible: !!(appController && appController.isExpanded)
+        onPinClicked: root.isPinned = !root.isPinned
         onMinimizeClicked: if (appController) appController.isExpanded = false
         onCloseClicked: confirmDialog.visible = true
     }

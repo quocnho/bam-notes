@@ -9,8 +9,10 @@ Rectangle {
     border.color: "#383838"
     border.width: 1
 
+    property bool isPinned: true
     signal closeClicked()
     signal minimizeClicked()
+    signal pinClicked()
     function focusInput() { promptInput.focusInput() }
     function clearHistory() { msgList.clearMessages() }
     onVisibleChanged: if (visible) Qt.callLater(focusInput)
@@ -21,6 +23,8 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         controller: chatRoot.controller
+        isPinned: chatRoot.isPinned
+        onPinClicked: chatRoot.pinClicked()
         onCloseClicked: chatRoot.closeClicked()
         onMinimizeClicked: chatRoot.minimizeClicked()
     }
