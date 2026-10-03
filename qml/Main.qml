@@ -3,6 +3,8 @@ import "mascot"
 import "chat"
 import "common"
 
+import "menu"
+
 Window {
     id: dogWindow
     property var appController: null
@@ -18,10 +20,12 @@ Window {
     onXChanged: {
         if (initialized) savePosTimer.restart();
         if (chatWin && chatWin.visible && !syncingWinPos) chatWin.realignToDog();
+        if (menuWin && menuWin.visible) menuWin.realignToDog();
     }
     onYChanged: {
         if (initialized) savePosTimer.restart();
         if (chatWin && chatWin.visible && !syncingWinPos) chatWin.realignToDog();
+        if (menuWin && menuWin.visible) menuWin.realignToDog();
     }
 
     function updateDogPos() {
@@ -37,26 +41,21 @@ Window {
     Component.onCompleted: { updateDogPos(); mascotDog.wakeUp(); }
     Screen.onWidthChanged: updateDogPos(); Screen.onHeightChanged: updateDogPos()
 
+    Shortcut { sequence: "s"; onActivated: mascotDog.setDogState("sleeping") }
+    Shortcut { sequence: "w"; onActivated: mascotDog.wakeUp() }
+
     DogMascotHost {
         id: mascotDog; anchors.fill: parent; targetWindow: dogWindow
         appController: dogWindow.appController
-        onRequestShowClock: {
-            clockWin.x = dogWindow.x + (dogWindow.width - clockWin.width) / 2
-            clockWin.y = dogWindow.y - clockWin.height - 10
-            clockWin.visible = true; clockPopup.triggerTime();
-        }
+        onRequestShowMenu: menuWin.openMenu()
+        onHoverExited: menuWin.scheduleClose(650)
         onDogStateChanged: if ((dogState === "lying" || dogState === "sleeping") &&
                                appController && appController.isExpanded) appController.isExpanded = false
         onClicked: if (appController) {
+            menuWin.closeMenu()
             appController.isExpanded = !appController.isExpanded
             if (appController.isExpanded) Qt.callLater(chatWin.focusInput)
         }
-    }
-
-    Window {
-        id: clockWin; visible: false; width: 124; height: 40; color: "transparent"
-        flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
-        HourlyClockPopup { id: clockPopup; anchors.centerIn: parent; onFinished: clockWin.visible = false }
     }
 
     FloatingChatWindow {
@@ -66,5 +65,12 @@ Window {
         dogWindow: dogWindow
         isPinned: dogWindow.isPinned
         onPinToggled: dogWindow.isPinned = !dogWindow.isPinned
+    }
+
+    RadialMenuWindow {
+        id: menuWin
+        dogWindow: dogWindow
+        appController: dogWindow.appController
+        onActionSelected: (act) => console.log("[Bam Menu] Selected:", act)
     }
 }

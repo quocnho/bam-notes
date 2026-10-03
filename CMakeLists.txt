@@ -47,6 +47,7 @@ qt_add_qml_module(bam-troly
         qml/mascot/behaviors/PlayfulBehavior.qml
         qml/mascot/behaviors/MascotInteractionController.qml
         qml/mascot/behaviors/DogEarBehavior.qml
+        qml/mascot/behaviors/SleepDreamBubbleFlow.qml
         qml/mascot/behaviors/IntroRunner.qml
         qml/chat/ChatWindow.qml
         qml/chat/FloatingChatWindow.qml
@@ -60,7 +61,11 @@ qt_add_qml_module(bam-troly
         qml/dialogs/ConfirmDialog.qml
         qml/common/StatusIndicator.qml
         qml/common/HourlyClockPopup.qml
+        qml/menu/RadialMenuItem.qml
+        qml/menu/RadialMenuView.qml
+        qml/menu/RadialMenuWindow.qml
     RESOURCES
+        qml/menu/RadialArcSolver.js
         assets/images/dog_bark.png
         assets/images/dog_run.png
         assets/images/dog_sit.png

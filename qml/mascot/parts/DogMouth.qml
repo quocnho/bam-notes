@@ -4,6 +4,7 @@ Item {
     id: mouthRoot
     property string dogState: "active"
     property bool isBarking: false
+    property bool isLicking: false
     width: 28; height: 19
 
     // Khối mõm chó bo tròn 3D
@@ -36,22 +37,29 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter; anchors.top: nose.bottom
         }
 
-        // Nụ cười khép miệng chữ 'w' màu nâu đậm (#4A2810), ngắn gọn 10px
+    // Nụ cười khép miệng chữ 'w' màu nâu đậm (#4A2810) khi không sủa
         Canvas {
             anchors.horizontalCenter: parent.horizontalCenter
             y: 9.8; width: 10.5; height: 4
             visible: !mouthRoot.isBarking
             onPaint: {
-                var ctx = getContext("2d");
-                ctx.reset();
-                ctx.lineWidth = 1.35;
-                ctx.strokeStyle = "#4A2810";
-                ctx.lineCap = "round";
-                ctx.beginPath();
-                ctx.moveTo(1, 1);
-                ctx.quadraticCurveTo(3.0, 3.2, 5.25, 2.5);
-                ctx.quadraticCurveTo(7.5, 3.2, 9.5, 1);
-                ctx.stroke();
+                var ctx = getContext("2d"); ctx.reset(); ctx.lineWidth = 1.35; ctx.strokeStyle = "#4A2810";
+                ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(1, 1);
+                ctx.quadraticCurveTo(3.0, 3.2, 5.25, 2.5); ctx.quadraticCurveTo(7.5, 3.2, 9.5, 1); ctx.stroke();
+            }
+        }
+
+        // Lưỡi hồng thè ra liếm liếm nũng nịu lấy lòng chủ nhân khi đưa chuột lại gần
+        Rectangle {
+            id: lickingTongue
+            visible: mouthRoot.isLicking && !mouthRoot.isBarking
+            width: 5.5; height: 5.5; radius: 2.75; color: "#FB7185"
+            border.color: "#E11D48"; border.width: 0.6
+            anchors.horizontalCenter: parent.horizontalCenter; y: 11.2
+            SequentialAnimation on height {
+                running: lickingTongue.visible; loops: Animation.Infinite
+                NumberAnimation { to: 7.2; duration: 180; easing.type: Easing.OutSine }
+                NumberAnimation { to: 4.5; duration: 160; easing.type: Easing.InOutSine }
             }
         }
 

@@ -5,25 +5,27 @@ Item {
     property var mascotRig: null
     property string dogState: "active"
 
+    property bool lastPawLeft: false
+
     Timer {
         id: randomPlayTimer
-        interval: Math.floor(Math.random() * 5000) + 7000
+        interval: Math.floor(Math.random() * 2500) + 3500
         repeat: true
         running: playfulRoot.dogState === "active" || playfulRoot.dogState === "sitting"
         onTriggered: {
-            if (playfulRoot.mascotRig && !playfulRoot.mascotRig.isTrackingMouse &&
-                !playfulRoot.mascotRig.isBarking && pawActionAnim.running === false && jumpAndBarkAnim.running === false) {
-                // 35% xác suất nhảy cao nhún người rồi sủa, 65% xác suất giơ 1 chân nghiêng đầu
-                if (Math.random() < 0.35) {
+            if (playfulRoot.mascotRig && !playfulRoot.mascotRig.isHovered &&
+                !playfulRoot.mascotRig.isBarking && !pawActionAnim.running && !jumpAndBarkAnim.running) {
+                // 25% xác suất nhảy sủa mừng, 75% xác suất luân phiên dơ 1 chân đỡ mỏi + nghiêng đầu
+                if (Math.random() < 0.25) {
                     jumpAndBarkAnim.restart();
                 } else {
-                    var isLeft = Math.random() < 0.5;
-                    playfulRoot.mascotRig.isLeftPawAction = isLeft;
-                    tiltAnim.to = isLeft ? -20 : 20;
+                    playfulRoot.lastPawLeft = !playfulRoot.lastPawLeft;
+                    playfulRoot.mascotRig.isLeftPawAction = playfulRoot.lastPawLeft;
+                    tiltAnim.to = playfulRoot.lastPawLeft ? -18 : 18;
                     pawActionAnim.restart();
                 }
             }
-            interval = Math.floor(Math.random() * 5000) + 7000;
+            interval = Math.floor(Math.random() * 2500) + 3500;
         }
     }
 
