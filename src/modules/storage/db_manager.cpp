@@ -25,13 +25,33 @@ bool DbManager::initDatabase() {
     sqlite3_exec(m_db, pragma_wal, nullptr, nullptr, nullptr);
 
     const char *create_sql = 
-        "CREATE TABLE IF NOT EXISTS messages ("
-        "  id INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "  role TEXT NOT NULL,"
-        "  content TEXT NOT NULL,"
-        "  created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
-        ");";
+        "CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, role TEXT, content TEXT);"
+        "CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);";
     return sqlite3_exec(m_db, create_sql, nullptr, nullptr, nullptr) == SQLITE_OK;
+}
+
+bool DbManager::setSetting(const QString &key, const QString &value) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!m_db) return false;
+    const char *sql = "INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value;";
+    sqlite3_stmt *stmt = nullptr;
+    if (sqlite3_prepare_v2(m_db, sql, -1, &stmt, nullptr) != SQLITE_OK) return false;
+    sqlite3_bind_text(stmt, 1, key.toUtf8().constData(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, value.toUtf8().constData(), -1, SQLITE_TRANSIENT);
+    bool ok = (sqlite3_step(stmt) == SQLITE_DONE);
+    sqlite3_finalize(stmt);
+    return ok;
+}
+
+QString DbManager::getSetting(const QString &key, const QString &defaultValue) {
+    std::lock_guard<std::mutex> lock(m_mutex);
+    if (!m_db) return defaultValue;
+    sqlite3_stmt *stmt = nullptr;
+    if (sqlite3_prepare_v2(m_db, "SELECT value FROM settings WHERE key = ?;", -1, &stmt, nullptr) != SQLITE_OK) return defaultValue;
+    sqlite3_bind_text(stmt, 1, key.toUtf8().constData(), -1, SQLITE_TRANSIENT);
+    QString res = (sqlite3_step(stmt) == SQLITE_ROW) ? QString::fromUtf8(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0))) : defaultValue;
+    sqlite3_finalize(stmt);
+    return res;
 }
 
 bool DbManager::saveMessage(const QString &role, const QString &content) {

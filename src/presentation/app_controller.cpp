@@ -2,11 +2,26 @@
 #include "modules/ai/llama_engine.hpp"
 #include "plugins/builtins/memory_tool.cpp"
 
+#include <QProcess>
+
 AppController::AppController(QObject *parent)
     : QObject(parent),
       m_db(std::make_shared<DbManager>()) {
 
     m_db->initDatabase();
+
+    // Mặc định bằng chế độ của hệ thống hoặc cài đặt đã lưu
+    QString savedTheme = m_db->getSetting("app_theme", "");
+    if (!savedTheme.isEmpty()) {
+        m_isDarkTheme = (savedTheme == "dark");
+    } else {
+        QProcess p;
+        p.start("gsettings", {"get", "org.gnome.desktop.interface", "color-scheme"});
+        if (p.waitForFinished(500)) {
+            QString out = QString::fromUtf8(p.readAllStandardOutput()).trimmed();
+            m_isDarkTheme = !out.contains("prefer-light");
+        }
+    }
 
     auto ai = std::make_shared<LlamaEngine>();
     auto tools = std::make_shared<ToolRegistry>();
@@ -48,6 +63,32 @@ void AppController::stopGeneration() {
     }
 }
 
+#include <QGuiApplication>
+#include <QClipboard>
+
 void AppController::clearHistory() {
     m_db->clearHistory();
+}
+
+void AppController::copyToClipboard(const QString &text) {
+    if (auto clip = QGuiApplication::clipboard()) {
+        clip->setText(text);
+    }
+}
+
+void AppController::savePosition(int x, int y) {
+    m_db->setSetting("pos_x", QString::number(x));
+    m_db->setSetting("pos_y", QString::number(y));
+}
+
+QPoint AppController::getSavedPosition(int defaultX, int defaultY) {
+    QString xStr = m_db->getSetting("pos_x", QString::number(defaultX));
+    QString yStr = m_db->getSetting("pos_y", QString::number(defaultY));
+    return QPoint(xStr.toInt(), yStr.toInt());
+}
+
+void AppController::toggleDesktopTheme() {
+    m_isDarkTheme = !m_isDarkTheme;
+    m_db->setSetting("app_theme", m_isDarkTheme ? "dark" : "light");
+    emit themeChanged();
 }

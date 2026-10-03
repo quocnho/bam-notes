@@ -36,6 +36,8 @@ Lưu trữ lịch sử các ý tưởng đã được người dùng xác nhận
 - **Mục tiêu:** Trực quan hóa thao tác điều khiển cửa sổ và bảo vệ an toàn dữ liệu hội thoại của người dùng.
 - **Subsystem liên quan:** `ui` (ChatHeader.qml, FloatingBubble.qml, ConfirmDialog.qml, ChatWindow.qml, Main.qml).
 
-
-
-
+### [IDEA-BAM-TROLY-20261002-06] Linh Vật Chú Chó Hoạt Họa Disney & Trạng Thái Idle Theo Thời Gian
+- **Thời gian tiếp nhận:** 2026-10-02 22:45
+- **Mô tả:** Thiết kế linh vật chú chó ngộ nghĩnh, đáng yêu, có hồn áp dụng 12 Nguyên tắc Hoạt họa Disney (Squash & Stretch, Secondary Action, Overlapping Action, Timing & Spacing, Appeal). Tích hợp kịch bản hoạt cảnh khởi động chạy từ góc màn hình ra vẫy đuôi chào, Idle State Machine theo các mốc thời gian: 3 phút ngồi quan sát, 5 phút nằm mở mắt vẩy tai lắng nghe, 10 phút chìm vào giấc ngủ kèm nhịp thở và bong bóng Zzz. Click chuột đánh thức chú chó bật dậy và mở khung chat ngay trên đầu.
+- **Mục tiêu:** Tạo trải nghiệm trợ lý ảo sinh động, ấm áp, có linh hồn và phản ứng tự nhiên với người dùng.
+- **Subsystem liên quan:** `ui` (DogHead.qml, DogBody.qml, DogMascot.qml, DogInteractiveBubble.qml, IntroRunner.qml, Main.qml).

@@ -2,18 +2,30 @@
 
 > **Dành cho AI Assistants (Gemini, Claude, GPT, Antigravity, Cursor, Zed):**
 > Đọc tài liệu này trước để định tuyến trực tiếp đến đúng file cần sửa.
-> Tuân thủ nghiêm ngặt mô hình **Clean Architecture & Atomic Micro-Modules (< 80 dòng/file QML/Nix, < 100 dòng/file C++)**.
+> Tuân thủ nghiêm ngặt **Clean Architecture, Atomic Micro-Modules (< 80 dòng/file QML/Nix, < 100 dòng/file C++)** và **Quy trình Refine/Reframe Prompt**.
 
-## 1. Directory Structure Map (Clean Architecture)
+## 1. Cơ Chế Bắt Buộc: Refine & Reframe Prompt Yêu Cầu
+Mỗi khi nhận yêu cầu từ người dùng, AI Agent PHẢI:
+1. **Refine & Reframe**: Tinh chỉnh và diễn đạt lại yêu cầu theo phong cách chuyên nghiệp:
+   - **Mục tiêu kỹ thuật (Goal)**.
+   - **Phạm vi tác động (Scope & Affected Components)**.
+   - **Giải pháp thiết kế & luồng dữ liệu (Architecture/Dataflow)**.
+   - **Tiêu chuẩn nghiệm thu (Definition of Done - DoD)**.
+2. **Xác nhận hoặc Thực thi sắc bén**: Nếu tác vụ phức tạp/phân nhánh, xin xác nhận; nếu rõ ràng, trình bày khung reframing trước khi thực hiện vi phẫu mã nguồn.
+
+## 2. Directory Structure Map (Clean Architecture)
 
 ```text
 bam-troly/
 ├── devenv.nix                        # Môi trường Nix (C++20, Qt6, CMake, llama-cpp) (< 40 dòng)
-├── CMakeLists.txt                    # Build configuration C++20 / Qt6 (< 50 dòng)
+├── CMakeLists.txt                    # Build configuration C++20 / Qt6 (< 80 dòng)
 ├── AGENTS.md                         # Bản đồ kiến trúc & quy tắc AI Agent
 ├── README.md                         # Tổng quan dự án & hướng dẫn chạy
 ├── bk_idea.md                        # Lịch sử ý tưởng đã chuẩn hóa
 ├── idea.md                           # Quick Idea Capture
+├── .agents/                          # Quy tắc & Kỹ năng AI tích hợp
+│   ├── rules/troly_rules.md          # Bộ quy tắc cốt lõi cho Agent
+│   └── skills/                       # Kỹ năng định tuyến, AI resilience, reframing
 ├── src/
 │   ├── main.cpp                      # Khởi tạo QGuiApplication & QML Engine (< 40 dòng)
 │   ├── core/                         # Domain Layer: Thực thể & Kiểu dữ liệu
@@ -38,21 +50,41 @@ bam-troly/
 │   └── presentation/                 # Presentation Layer: Controllers & ViewModel
 │       ├── app_controller.hpp        # Qt ViewModel kết nối QML <-> Workflow (< 40 dòng)
 │       └── app_controller.cpp        # Signals/slots & UI handlers (< 60 dòng)
-└── qml/                              # UI Layer: Qt6 Quick (QML)
-    ├── Main.qml                      # Cửa sổ trong suốt, Frameless, DragHandler (< 50 dòng)
-    ├── components/                   # UI Micro-Components
-    │   ├── FloatingBubble.qml        # Bong bóng tròn nổi 72x72 kéo thả (< 40 dòng)
-    │   └── StatusIndicator.qml       # Đèn trạng thái AI Idle/Streaming (< 20 dòng)
-    └── views/                        # View Panels
-        ├── ChatWindow.qml            # Khung chat nổi 400x580 (< 75 dòng)
-        ├── MessageList.qml           # Danh sách tin nhắn streaming (< 55 dòng)
-        └── PromptInput.qml           # Ô nhập liệu và nút gửi/dừng (< 45 dòng)
+└── qml/                              # UI Layer: Qt6 Quick (Clean Architecture)
+    ├── Main.qml                      # Cửa sổ trong suốt, Frameless, DragHandler (< 80 dòng)
+    ├── mascot/                       # Chức năng Linh vật & Hành vi (Mascot Feature)
+    │   ├── DogMascotHost.qml         # Host kết nối tương tác và chuyển động Mascot (< 50 dòng)
+    │   ├── parts/                    # Các bộ phận độc lập (Rig Parts)
+    │   │   ├── DogEyes.qml           # Mắt lúng liếng, đảo mắt, chớp mắt, catchlight (< 75 dòng)
+    │   │   ├── DogEars.qml           # Tai vểnh, tai mềm giật nhẹ/cụp khi ngủ (< 55 dòng)
+    │   │   ├── DogMouth.qml          # Mõm, mũi đen và lưỡi hồng rung nhịp (< 50 dòng)
+    │   │   ├── DogTail.qml           # Đuôi xoắn vẫy tốc độ cao uốn lượn (< 65 dòng)
+    │   │   ├── DogTorso.qml          # Thân mình, ngực phồng, đốm lưng, chân trước (< 80 dòng)
+    │   │   ├── DogNameTag.qml        # Bảng tên BamOS treo tự nhiên, thích ứng tư thế (< 75 dòng)
+    │   │   ├── DogHeadAssembly.qml   # Lắp ráp hộp sọ, tai, mắt, mõm và má hồng (< 55 dòng)
+    │   │   └── DogSideWalk.qml       # Chân chuyển động lúp xúp sang bên (< 65 dòng)
+    │   └── behaviors/                # Quy trình & Luồng hành vi hoạt họa (Behaviors & Flows)
+    │       ├── DogRigMascot.qml      # Điều phối chuyển động đa tầng 12 Disney (< 75 dòng)
+    │       ├── BarkAnimationFlow.qml # Timeline sủa gâu (ngực phồng, ngửa đầu, co người) (< 45 dòng)
+    │       ├── JumpBounceAnimationFlow.qml # Hoạt cảnh nhảy mừng rỡ cưng nựng (< 50 dòng)
+    │       ├── PlayfulBehavior.qml   # Hành vi dơ chân ngẫu nhiên khi rảnh (< 40 dòng)
+    │       ├── MascotInteractionController.qml # Quản lý Idle 3m/5m/10m & Wake (< 40 dòng)
+    │       └── IntroRunner.qml       # Hoạt cảnh chạy từ mép màn hình vào (< 35 dòng)
+    ├── chat/                         # Tính năng Khung Chat (Chat Feature)
+    │   ├── FloatingChatWindow.qml    # Cửa sổ chat nổi bám dính tọa độ Mascot (< 60 dòng)
+    │   ├── ChatWindow.qml            # Khung chat nổi 400x580 (< 60 dòng)
+    │   ├── ChatHeader.qml            # Header ghim, thu nhỏ, đóng (< 70 dòng)
+    │   ├── MessageList.qml           # Danh sách tin nhắn streaming (< 55 dòng)
+    │   ├── MessageBubble.qml         # Bong bóng chat hỗ trợ code/markdown (< 75 dòng)
+    │   ├── CodeBlockView.qml         # Hộp hiển thị code với nút copy (< 65 dòng)
+    │   ├── CopyButton.qml            # Nút copy tiện lợi kèm tooltip (< 35 dòng)
+    │   ├── ChatTooltip.qml           # Tooltip gọn gàng (< 25 dòng)
+    │   └── PromptInput.qml           # Ô nhập liệu và nút gửi/dừng (< 70 dòng)
+    ├── dialogs/                      # Hộp thoại tương tác (Dialogs)
+    │   └── ConfirmDialog.qml         # Hộp thoại xác nhận đóng & xóa chat (< 60 dòng)
+    └── common/                       # Thành phần dùng chung (Common UI Components)
+        └── StatusIndicator.qml       # Đèn trạng thái AI Idle/Streaming (< 20 dòng)
 ```
-
-## 2. Token Saving Guidelines for AI
-- **Targeted Reading**: Sử dụng `grep_search` và `view_file` với `StartLine`/`EndLine` cụ thể. Không quét toàn bộ repo.
-- **Targeted Edits**: Ưu tiên sử dụng `replace_file_content` hoặc `multi_replace_file_content`.
-- **Tuyệt đối không đọc**: `build/`, `.direnv/`, `.devenv/`, file nhị phân, model file `.gguf`.
 
 ## 3. Clean Architecture & Micro-Modules Rules
 - **Ngưỡng trần giới hạn dòng (Strict Ceiling)**:
@@ -63,18 +95,16 @@ bam-troly/
 
 ## 4. UI & Floating Agent Invariants
 - **Frameless, Transparent & Drag-and-Drop**:
-  - Giao diện KHÔNG phải là cửa sổ thông thường: Nền trong suốt (`color: "transparent"`), không viền, `Qt.WindowStaysOnTopHint`.
-  - Hỗ trợ kéo thả tự do trên cả Wayland (Linux/BamOS) và Windows qua `DragHandler` + `startSystemMove()`.
-  - Tự động co giãn mượt mà: Bong bóng chờ (72x72) <--> Khung chat / thông báo (400x580).
-- **OpenClaw Agent Pattern & Local RAG**:
-  - ReAct Workflow (Reasoning ➔ Acting ➔ Tool Execution ➔ Synthesis).
-  - RAG cục bộ bằng SQLite3 WAL + FTS5 & `sqlite-vec` (384 dimensions).
+  - Giao diện nền trong suốt (`color: "transparent"`), không viền, `Qt.WindowStaysOnTopHint`.
+  - Hỗ trợ kéo thả tự do trên Wayland (BamOS) và Windows qua `DragHandler` + `startSystemMove()`.
+  - Tự động co giãn mượt mà: Linh vật chờ <--> Khung chat / thông báo (400x580).
 - **Bulkhead Pattern (Cô lập tài nguyên)**:
   - Tách hoàn toàn việc suy luận AI (`llama.cpp`) sang luồng nền (`std::jthread`).
   - Truyền token streaming qua Qt Signal/Slot (`Qt::QueuedConnection`) để UI luôn mượt 60fps.
 
-## 5. Versioning Standard (`AA.BB.CC`) & Git Workflow
-- **Định dạng**: `AA.BB.CC` (ví dụ năm 2026 -> `v26.01.01`).
+## 5. Token Saving & Git Workflow
+- **Targeted Reading**: Sử dụng `grep_search` và `view_file` với `StartLine`/`EndLine` cụ thể.
+- **Không đọc**: `build/`, `.direnv/`, `.devenv/`, file nhị phân, model file `.gguf`, file `.db`.
+- **Versioning Standard**: `AA.BB.CC` (ví dụ: `v26.01.01`).
 - **Nhánh Git**: `develop` (dev chính), `main` (release có Git tag).
-- **Commit Standard**: Conventional Commits (`feat(...)`, `fix(...)`, `refactor(...)`, `perf(...)`, `chore(...)`).
-- **Zero Bloat Invariant**: Không bao giờ commit `build/`, `*.gguf`, `*.db`, `.direnv`, `.devenv`.
+- **Commit**: Conventional Commits (`feat(...)`, `fix(...)`, `refactor(...)`, `perf(...)`, `chore(...)`).

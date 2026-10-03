@@ -4,9 +4,11 @@ Rectangle {
     id: dialogRoot
     width: parent ? Math.min(parent.width - 32, 340) : 320
     height: contentCol.implicitHeight + 32
+    property var controller: null
+    readonly property bool isDark: !controller || controller.isDarkTheme
     radius: 12
-    color: "#282828"
-    border.color: "#444444"
+    color: isDark ? "#282828" : "#ffffff"
+    border.color: isDark ? "#444444" : "#d8d8dc"
     border.width: 1
 
     signal confirmed(bool clearData)
@@ -20,7 +22,7 @@ Rectangle {
 
         Text {
             text: "Xác nhận đóng ứng dụng"
-            color: "#ffffff"
+            color: dialogRoot.isDark ? "#ffffff" : "#1a1a1c"
             font.bold: true
             font.pixelSize: 14
         }
@@ -28,7 +30,7 @@ Rectangle {
         Text {
             width: parent.width
             text: "Bạn có muốn xóa dữ liệu đoạn chat trước khi đóng ứng dụng không?"
-            color: "#cccccc"
+            color: dialogRoot.isDark ? "#cccccc" : "#55555c"
             font.pixelSize: 12
             wrapMode: Text.Wrap
         }

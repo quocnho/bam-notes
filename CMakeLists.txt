@@ -30,13 +30,42 @@ qt_add_qml_module(bam-troly
     VERSION 1.0
     QML_FILES
         qml/Main.qml
-        qml/components/FloatingBubble.qml
-        qml/components/StatusIndicator.qml
-        qml/components/ConfirmDialog.qml
-        qml/views/ChatWindow.qml
-        qml/views/ChatHeader.qml
-        qml/views/MessageList.qml
-        qml/views/PromptInput.qml
+        qml/mascot/DogMascotHost.qml
+        qml/mascot/parts/DogEyes.qml
+        qml/mascot/parts/DogEars.qml
+        qml/mascot/parts/DogMouth.qml
+        qml/mascot/parts/DogTail.qml
+        qml/mascot/parts/DogTorso.qml
+        qml/mascot/parts/DogFrontPaws.qml
+        qml/mascot/parts/DogNameTag.qml
+        qml/mascot/parts/DogHeadAssembly.qml
+        qml/mascot/parts/DogSideWalk.qml
+        qml/mascot/behaviors/DogRigMascot.qml
+        qml/mascot/behaviors/BarkAnimationFlow.qml
+        qml/mascot/behaviors/JumpBounceAnimationFlow.qml
+        qml/mascot/behaviors/HoverGreetingFlow.qml
+        qml/mascot/behaviors/PlayfulBehavior.qml
+        qml/mascot/behaviors/MascotInteractionController.qml
+        qml/mascot/behaviors/IntroRunner.qml
+        qml/chat/ChatWindow.qml
+        qml/chat/FloatingChatWindow.qml
+        qml/chat/ChatHeader.qml
+        qml/chat/MessageList.qml
+        qml/chat/MessageBubble.qml
+        qml/chat/CodeBlockView.qml
+        qml/chat/PromptInput.qml
+        qml/chat/ChatTooltip.qml
+        qml/chat/CopyButton.qml
+        qml/dialogs/ConfirmDialog.qml
+        qml/common/StatusIndicator.qml
+        qml/common/HourlyClockPopup.qml
+    RESOURCES
+        assets/images/dog_bark.png
+        assets/images/dog_run.png
+        assets/images/dog_sit.png
+        assets/images/dog_lie.png
+        assets/images/dog_sleep.png
+        assets/images/dog_walk_side.png
 )
 
 target_include_directories(bam-troly PRIVATE src)

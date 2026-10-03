@@ -14,6 +14,8 @@ public:
     bool saveMessage(const QString &role, const QString &content);
     std::vector<Message> getRecentMessages(int limit = 20);
     void clearHistory();
+    bool setSetting(const QString &key, const QString &value);
+    QString getSetting(const QString &key, const QString &defaultValue = "");
 
 private:
     sqlite3 *m_db{nullptr};

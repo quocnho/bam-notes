@@ -1,14 +1,15 @@
 import QtQuick
-import "../components"
 
 Rectangle {
     id: chatRoot
     property var controller: null
     radius: 16
-    color: "#242424"
-    border.color: "#383838"
+    readonly property bool isDark: !controller || controller.isDarkTheme
+    color: isDark ? "#242424" : "#f7f7f8"
+    border.color: isDark ? "#383838" : "#d8d8dc"
     border.width: 1
 
+    property var targetWindow: null
     property bool isPinned: true
     signal closeClicked()
     signal minimizeClicked()
@@ -22,6 +23,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        targetWindow: chatRoot.targetWindow
         controller: chatRoot.controller
         isPinned: chatRoot.isPinned
         onPinClicked: chatRoot.pinClicked()
