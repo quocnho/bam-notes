@@ -11,8 +11,8 @@ Item {
     property real randomPawLift: 0; property bool isLeftPawAction: false
     property real headTilt: 0; property real chestPuff: 1.0; property real squashY: 1.0
     property real bodyBob: 0; property real jumpY: 0; property real bothPawsLift: 0
-    property bool isAlert: isHovered || isBarking
-    property real earFlap: 0
+    property bool isAlert: isHovered || isBarking; property real earFlap: 0
+    property bool isLicking: isHovered && dogState !== "sleeping" && dogState !== "lying" && !isBarking
     function bark(showBubble) { barkFlow.play(showBubble === true) }
     function jumpAndBounce() { jumpFlow.play() }
 
@@ -50,7 +50,7 @@ Item {
         DogHeadAssembly {
             dogState: mascotRoot.dogState; isBarking: mascotRoot.isBarking
             headTiltAngle: mascotRoot.headTilt; isTrackingMouse: mascotRoot.isTrackingMouse
-            isAlert: mascotRoot.isAlert; earFlap: mascotRoot.earFlap
+            isAlert: mascotRoot.isAlert; isLicking: mascotRoot.isLicking; earFlap: mascotRoot.earFlap
             gazeX: mascotRoot.gazeX; gazeY: mascotRoot.gazeY
             anchors.horizontalCenter: parent.horizontalCenter
             y: mascotRoot.dogState === "sleeping" ? 24 : (mascotRoot.dogState === "lying" ? 19 :
@@ -60,20 +60,15 @@ Item {
 
         Rectangle {
             id: barkTextBubble
-            visible: false; width: 60; height: 30; radius: 15
-            color: "#FFFFFF"; border.color: "#3584E4"; border.width: 1.5
+            visible: false; width: 60; height: 30; radius: 15; color: "#FFFFFF"; border.color: "#3584E4"; border.width: 1.5
             anchors.right: parent.right; anchors.top: parent.top; anchors.topMargin: 0
             Text { anchors.centerIn: parent; text: "Gâu! 🐾"; font.bold: true; font.pixelSize: 12; color: "#2C3E50" }
         }
 
-        Text {
-            visible: mascotRoot.dogState === "sleeping"; text: "💤"; font.pixelSize: 18
-            anchors.right: parent.right; anchors.top: parent.top; anchors.topMargin: -4
-            SequentialAnimation on opacity {
-                running: mascotRoot.dogState === "sleeping"; loops: Animation.Infinite
-                NumberAnimation { to: 0.2; duration: 800 }
-                NumberAnimation { to: 1.0; duration: 800 }
-            }
+        SleepDreamBubbleFlow {
+            active: mascotRoot.dogState === "sleeping"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top; anchors.topMargin: -28
         }
     }
 }

@@ -9,6 +9,7 @@ Item {
     property real gazeX: 0; property real gazeY: 0
     property bool isTrackingMouse: false
     property bool isAlert: false
+    property bool isLicking: false
     property real earFlap: 0
     width: 54; height: 46
 
@@ -55,6 +56,7 @@ Item {
             }
             DogMouth {
                 dogState: mascotHeadRoot.dogState; isBarking: mascotHeadRoot.isBarking
+                isLicking: mascotHeadRoot.isLicking
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom; anchors.bottomMargin: 1
             }
