@@ -4,46 +4,38 @@ Item {
     id: animRoot
     property var target: null
     property var barkBubble: null
+    property bool showBubble: false
     signal barkFinished()
 
-    function play() {
+    function play(bubble) {
+        if (typeof bubble === "boolean") showBubble = bubble;
         barkTimeline.restart();
     }
 
-    // Hoạt cảnh sủa Gâu gâu: Há ngậm miệng nhanh nhịp kép (Double Snap)
+    // Hoạt cảnh sủa mượt mà chuẩn Disney: Nhịp nhàng mở miệng, không co giật bần bật
     SequentialAnimation {
         id: barkTimeline
-        // 1. Chuẩn bị phồng ngực & ngửa đầu há to (Tiếng 1)
+        // 1. Há miệng ngửa đầu đón hơi (Anticipation)
         ParallelAnimation {
             ScriptAction { script: if (target) target.isBarking = true }
-            NumberAnimation { target: animRoot.target; property: "headTilt"; to: -12; duration: 60; easing.type: Easing.OutQuad }
-            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 1.1; duration: 60; easing.type: Easing.OutQuad }
-            NumberAnimation { target: animRoot.target; property: "squashY"; to: 1.05; duration: 60; easing.type: Easing.OutQuad }
+            NumberAnimation { target: animRoot.target; property: "headTilt"; to: -8; duration: 90; easing.type: Easing.OutQuad }
+            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 1.06; duration: 90; easing.type: Easing.OutQuad }
+            NumberAnimation { target: animRoot.target; property: "earFlap"; to: -5; duration: 90; easing.type: Easing.OutQuad }
         }
-        // 2. Đóng sập miệng nhanh (Gâu 1)
+        // 2. Cất tiếng sủa thân thiện (Gâu)
         ParallelAnimation {
-            ScriptAction { script: if (barkBubble) barkBubble.visible = true }
-            NumberAnimation { target: animRoot.target; property: "headTilt"; to: 4; duration: 45; easing.type: Easing.OutBounce }
-            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 0.95; duration: 45; easing.type: Easing.OutBounce }
-            NumberAnimation { target: animRoot.target; property: "squashY"; to: 0.92; duration: 45; easing.type: Easing.OutBounce }
+            ScriptAction { script: if (barkBubble && showBubble) barkBubble.visible = true }
+            NumberAnimation { target: animRoot.target; property: "headTilt"; to: 2; duration: 110; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 0.98; duration: 110; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: animRoot.target; property: "earFlap"; to: 4; duration: 110; easing.type: Easing.InOutQuad }
         }
-        // 3. Há nhanh tiếp (Tiếng 2)
+        // 3. Trở về trạng thái bình thường êm ái (Follow Through)
         ParallelAnimation {
-            NumberAnimation { target: animRoot.target; property: "headTilt"; to: -10; duration: 50; easing.type: Easing.OutQuad }
-            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 1.08; duration: 50; easing.type: Easing.OutQuad }
+            NumberAnimation { target: animRoot.target; property: "headTilt"; to: 0; duration: 150; easing.type: Easing.OutSine }
+            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 1.0; duration: 150; easing.type: Easing.OutSine }
+            NumberAnimation { target: animRoot.target; property: "earFlap"; to: 0; duration: 150; easing.type: Easing.OutSine }
         }
-        // 4. Đóng sập miệng nhanh (Gâu 2)
-        ParallelAnimation {
-            NumberAnimation { target: animRoot.target; property: "headTilt"; to: 2; duration: 45; easing.type: Easing.OutBounce }
-            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 0.96; duration: 45; easing.type: Easing.OutBounce }
-        }
-        // 5. Trở lại trạng thái bình thường mượt mà
-        ParallelAnimation {
-            NumberAnimation { target: animRoot.target; property: "headTilt"; to: 0; duration: 140; easing.type: Easing.OutBack }
-            NumberAnimation { target: animRoot.target; property: "chestPuff"; to: 1.0; duration: 140; easing.type: Easing.OutBack }
-            NumberAnimation { target: animRoot.target; property: "squashY"; to: 1.0; duration: 140; easing.type: Easing.OutBack }
-        }
-        PauseAnimation { duration: 400 }
+        PauseAnimation { duration: 300 }
         ScriptAction {
             script: {
                 if (target) target.isBarking = false;

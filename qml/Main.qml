@@ -39,6 +39,7 @@ Window {
 
     DogMascotHost {
         id: mascotDog; anchors.fill: parent; targetWindow: dogWindow
+        appController: dogWindow.appController
         onRequestShowClock: {
             clockWin.x = dogWindow.x + (dogWindow.width - clockWin.width) / 2
             clockWin.y = dogWindow.y - clockWin.height - 10

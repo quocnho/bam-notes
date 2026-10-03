@@ -11,7 +11,9 @@ Item {
     property real randomPawLift: 0; property bool isLeftPawAction: false
     property real headTilt: 0; property real chestPuff: 1.0; property real squashY: 1.0
     property real bodyBob: 0; property real jumpY: 0; property real bothPawsLift: 0
-    function bark() { barkFlow.play() }
+    property bool isAlert: isHovered || isBarking
+    property real earFlap: 0
+    function bark(showBubble) { barkFlow.play(showBubble === true) }
     function jumpAndBounce() { jumpFlow.play() }
 
     // Nhịp thở khi thức (nhanh 650ms) vs khi ngủ (êm đềm sâu lắng 1200ms)
@@ -39,7 +41,7 @@ Item {
             dogState: mascotRoot.dogState; isBarking: mascotRoot.isBarking
             chestPuff: mascotRoot.chestPuff; squashY: mascotRoot.squashY
             legLiftRight: mascotRoot.bothPawsLift > 0 ? mascotRoot.bothPawsLift :
-                          (mascotRoot.dogState !== "sleeping" ? (mascotRoot.isHovered ? 9 : (!mascotRoot.isLeftPawAction ? mascotRoot.randomPawLift : 0)) : 0)
+                          (mascotRoot.dogState !== "sleeping" ? (!mascotRoot.isLeftPawAction ? mascotRoot.randomPawLift : 0) : 0)
             legLiftLeft: mascotRoot.bothPawsLift > 0 ? mascotRoot.bothPawsLift :
                          (mascotRoot.dogState !== "sleeping" ? (mascotRoot.isLeftPawAction ? mascotRoot.randomPawLift : 0) : 0)
             anchors.horizontalCenter: parent.horizontalCenter; anchors.bottom: parent.bottom
@@ -48,9 +50,10 @@ Item {
         DogHeadAssembly {
             dogState: mascotRoot.dogState; isBarking: mascotRoot.isBarking
             headTiltAngle: mascotRoot.headTilt; isTrackingMouse: mascotRoot.isTrackingMouse
+            isAlert: mascotRoot.isAlert; earFlap: mascotRoot.earFlap
             gazeX: mascotRoot.gazeX; gazeY: mascotRoot.gazeY
             anchors.horizontalCenter: parent.horizontalCenter
-            y: mascotRoot.dogState === "sleeping" ? 28 : (mascotRoot.dogState === "lying" ? 24 :
+            y: mascotRoot.dogState === "sleeping" ? 24 : (mascotRoot.dogState === "lying" ? 19 :
                (mascotRoot.dogState === "sitting" ? 14 : 6))
             Behavior on y { NumberAnimation { duration: 280; easing.type: Easing.OutBack } }
         }

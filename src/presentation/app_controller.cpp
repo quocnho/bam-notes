@@ -71,9 +71,7 @@ void AppController::clearHistory() {
 }
 
 void AppController::copyToClipboard(const QString &text) {
-    if (auto clip = QGuiApplication::clipboard()) {
-        clip->setText(text);
-    }
+    if (auto clip = QGuiApplication::clipboard()) clip->setText(text);
 }
 
 void AppController::savePosition(int x, int y) {
@@ -82,10 +80,12 @@ void AppController::savePosition(int x, int y) {
 }
 
 QPoint AppController::getSavedPosition(int defaultX, int defaultY) {
-    QString xStr = m_db->getSetting("pos_x", QString::number(defaultX));
-    QString yStr = m_db->getSetting("pos_y", QString::number(defaultY));
-    return QPoint(xStr.toInt(), yStr.toInt());
+    return QPoint(m_db->getSetting("pos_x", QString::number(defaultX)).toInt(),
+                  m_db->getSetting("pos_y", QString::number(defaultY)).toInt());
 }
+
+#include <QCursor>
+QPoint AppController::getCursorPos() { return QCursor::pos(); }
 
 void AppController::toggleDesktopTheme() {
     m_isDarkTheme = !m_isDarkTheme;

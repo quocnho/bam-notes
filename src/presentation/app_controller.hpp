@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void copyToClipboard(const QString &text);
     Q_INVOKABLE void savePosition(int x, int y);
     Q_INVOKABLE QPoint getSavedPosition(int defaultX, int defaultY);
+    Q_INVOKABLE QPoint getCursorPos();
     Q_INVOKABLE void toggleDesktopTheme();
 
 signals:
