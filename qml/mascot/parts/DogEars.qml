@@ -1,54 +1,70 @@
 import QtQuick
+import "../behaviors"
 
 Item {
     id: earsRoot
     property string dogState: "active"
     property real earTwitch: 0; property real earFlap: 0
-    width: 60; height: 38
+    property bool isAlert: false
+    property real randomTiltL: 0; property real randomTiltR: 0
+    property real halfFoldL: 0; property real halfFoldR: 0
+    // Thu gọn chiều rộng để tai áp sát vào đầu hơn
+    width: 48; height: 30
 
-    Timer {
-        interval: 2600; running: earsRoot.dogState !== "sleeping"; repeat: true
-        onTriggered: earTwitchAnim.restart()
-    }
+    DogEarBehavior { earsTarget: earsRoot; isSleeping: earsRoot.dogState === "sleeping" }
 
-    SequentialAnimation {
-        id: earTwitchAnim
-        NumberAnimation { target: earsRoot; property: "earTwitch"; to: -8; duration: 75; easing.type: Easing.OutQuad }
-        NumberAnimation { target: earsRoot; property: "earTwitch"; to: 10; duration: 85; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: earsRoot; property: "earTwitch"; to: 0; duration: 90; easing.type: Easing.OutQuad }
-    }
+    component DogPlayfulEar: Item {
+        width: 19; height: 26; property bool isLeft: true
+        // Tai nằm ngang đều đặn 2 bên đầu (-26° / +26°)
+        property real baseSplay: isLeft ? -26 : 26
+        property real stateRot: earsRoot.dogState === "sleeping" ? (isLeft ? -42 : 42) :
+                                (earsRoot.dogState === "lying" ? (isLeft ? -30 : 30) :
+                                (earsRoot.isAlert ? (isLeft ? -8 : 8) : baseSplay))
+        property real dynRot: isLeft ? earsRoot.randomTiltL : earsRoot.randomTiltR
+        property real dynFold: isLeft ? earsRoot.halfFoldL : earsRoot.halfFoldR
 
-    // Tai cụp / vểnh dáng chó đặc trưng (dáng dài tam giác bo tròn, rủ xuống 2 bên má)
-    component DogEarPart: Item {
-        width: 16; height: 32
-        property bool isLeft: true
-        property real baseRot: isLeft ?
-            (earsRoot.dogState === "sleeping" ? -48 : (earsRoot.dogState === "sitting" ? -18 : -26)) :
-            (earsRoot.dogState === "sleeping" ? 48 : (earsRoot.dogState === "sitting" ? 18 : 26))
+        transformOrigin: isLeft ? Item.BottomRight : Item.BottomLeft
+        rotation: stateRot + dynRot + (isLeft ? (earsRoot.earTwitch + earsRoot.earFlap) : (-earsRoot.earTwitch * 0.7 - earsRoot.earFlap))
+        Behavior on rotation { NumberAnimation { duration: 220; easing.type: Easing.OutBack } }
 
-        transformOrigin: isLeft ? Item.TopRight : Item.TopLeft
-        rotation: baseRot + (isLeft ? (earsRoot.earTwitch + earsRoot.earFlap) : (-earsRoot.earTwitch * 0.8 - earsRoot.earFlap))
-        Behavior on rotation { NumberAnimation { duration: 180; easing.type: Easing.OutBack } }
+        Canvas {
+            id: earCanvas; anchors.fill: parent
+            property real foldFactor: dynFold
+            onFoldFactorChanged: requestPaint()
+            onPaint: {
+                var ctx = getContext("2d"); ctx.reset();
+                var w = width; var h = height;
+                var foldY = dynFold * (h * 0.35);
+                // Vành ngoài tai: uốn lượn mềm mại, gốc tai ôm sát hộp sọ
+                ctx.beginPath();
+                if (isLeft) {
+                    ctx.moveTo(w, h); ctx.lineTo(1, h);
+                    ctx.bezierCurveTo(0, h * 0.52, 1, 6 + foldY, w * 0.44, 1.8 + foldY);
+                    ctx.bezierCurveTo(w * 0.76, 1.8 + foldY, w - 1, h * 0.44, w, h);
+                } else {
+                    ctx.moveTo(0, h); ctx.lineTo(w - 1, h);
+                    ctx.bezierCurveTo(w, h * 0.52, w - 1, 6 + foldY, w * 0.56, 1.8 + foldY);
+                    ctx.bezierCurveTo(w * 0.24, 1.8 + foldY, 1, h * 0.44, 0, h);
+                }
+                ctx.fillStyle = "#C66900"; ctx.fill();
+                ctx.lineWidth = 1.25; ctx.strokeStyle = "#8A3B00"; ctx.stroke();
 
-        // Vành tai ngoài dáng chó (tam giác bo tròn rủ xuống má)
-        Rectangle {
-            width: parent.width; height: parent.height
-            radius: 8; color: "#C66900"; border.color: "#8A3B00"; border.width: 1.2
-            // Đổ bóng 3D mặt trong nếp gấp tai
-            Rectangle {
-                width: 3; height: parent.height * 0.7; radius: 1.5; color: "#6E2C00"; opacity: 0.4
-                anchors.right: isLeft ? parent.right : undefined
-                anchors.left: isLeft ? undefined : parent.left
-                anchors.top: parent.top; anchors.topMargin: 4
-            }
-            // Lòng tai hồng mềm mại
-            Rectangle {
-                width: 7; height: 20; radius: 3.5; color: "#F5CBA7"; opacity: 0.8
-                anchors.centerIn: parent
+                // Lòng tai hồng phấn bo cong đồng bộ
+                ctx.beginPath();
+                if (isLeft) {
+                    ctx.moveTo(w - 2.5, h - 2); ctx.lineTo(3, h - 2);
+                    ctx.bezierCurveTo(2.5, h * 0.52, 3.5, 7 + foldY, w * 0.44, 5 + foldY);
+                    ctx.bezierCurveTo(w * 0.72, 5 + foldY, w - 2.5, h * 0.48, w - 2.5, h - 2);
+                } else {
+                    ctx.moveTo(2.5, h - 2); ctx.lineTo(w - 3, h - 2);
+                    ctx.bezierCurveTo(w - 2.5, h * 0.52, w - 3.5, 7 + foldY, w * 0.56, 5 + foldY);
+                    ctx.bezierCurveTo(w * 0.28, 5 + foldY, 2.5, h * 0.48, 2.5, h - 2);
+                }
+                ctx.fillStyle = "#F5CBA7"; ctx.fill();
             }
         }
     }
 
-    DogEarPart { id: leftEar; isLeft: true; x: 2; y: 2 }
-    DogEarPart { id: rightEar; isLeft: false; x: 42; y: 2 }
+    DogPlayfulEar { id: leftEar; isLeft: true; x: 2; y: 1 }
+    DogPlayfulEar { id: rightEar; isLeft: false; x: 27; y: 1 }
 }

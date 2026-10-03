@@ -4,55 +4,66 @@ Item {
     id: mouthRoot
     property string dogState: "active"
     property bool isBarking: false
-    property real tongueVibrate: 0
-    width: 26; height: 20
+    width: 28; height: 19
 
-    SequentialAnimation {
-        running: mouthRoot.isBarking || mouthRoot.dogState === "active"; loops: Animation.Infinite
-        NumberAnimation { target: mouthRoot; property: "tongueVibrate"; to: 1.2; duration: 90 }
-        NumberAnimation { target: mouthRoot; property: "tongueVibrate"; to: -1.2; duration: 90 }
-    }
-
+    // Khối mõm chó bo tròn 3D
     Rectangle {
-        width: 24; height: 16; radius: 8; color: "#FFFFFF"
+        id: muzzleBase
+        width: 26; height: 16; radius: 8; color: "#FFFFFF"
         border.color: "#E2E8F0"; border.width: 1
         anchors.horizontalCenter: parent.horizontalCenter; anchors.top: parent.top
 
+        // Bóng đổ nhẹ dưới cằm tạo chiều sâu
         Rectangle {
             anchors.bottom: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width * 0.85; height: 3; radius: 1.5; color: "#CBD5E1"; opacity: 0.6
+            width: parent.width * 0.85; height: 2.5; radius: 1.25; color: "#CBD5E1"; opacity: 0.55
         }
 
-        // Mũi chó đen bóng 3D
+        // Mũi chó đen bóng 3D đặc trưng (Canine Truffle)
         Rectangle {
-            width: 8; height: 6; radius: 3; color: "#111827"
+            id: nose
+            width: 8.5; height: 6; radius: 2.8; color: "#0F172A"
             anchors.horizontalCenter: parent.horizontalCenter; y: 1
-            Rectangle { width: 2.5; height: 1.5; radius: 0.75; color: "#FFFFFF"; opacity: 0.85; x: 1.5; y: 1 }
+            Rectangle { width: 3; height: 1.5; radius: 0.75; color: "#FFFFFF"; opacity: 0.85; x: 1.5; y: 1 }
+            Rectangle { width: 1.4; height: 1.2; radius: 0.6; color: "#020617"; x: 1.6; y: 3.6 }
+            Rectangle { width: 1.4; height: 1.2; radius: 0.6; color: "#020617"; x: 5.5; y: 3.6 }
         }
 
+        // Rãnh nhân trung mảnh mai màu nâu socola đậm ấm áp
         Rectangle {
-            width: 1.2; height: 4; radius: 0.6; color: "#94A3B8"
-            anchors.horizontalCenter: parent.horizontalCenter; y: 6.5
+            width: 1.1; height: 2.8; radius: 0.55; color: "#4A2810"
+            opacity: 0.85
+            anchors.horizontalCenter: parent.horizontalCenter; anchors.top: nose.bottom
         }
 
-        // Khoang miệng mở & đóng cực nhanh theo nhịp sủa dứt khoát (Snappy Staging - Disney #3)
+        // Nụ cười khép miệng chữ 'w' màu nâu đậm (#4A2810), ngắn gọn 10px
+        Canvas {
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 9.8; width: 10.5; height: 4
+            visible: !mouthRoot.isBarking
+            onPaint: {
+                var ctx = getContext("2d");
+                ctx.reset();
+                ctx.lineWidth = 1.35;
+                ctx.strokeStyle = "#4A2810";
+                ctx.lineCap = "round";
+                ctx.beginPath();
+                ctx.moveTo(1, 1);
+                ctx.quadraticCurveTo(3.0, 3.2, 5.25, 2.5);
+                ctx.quadraticCurveTo(7.5, 3.2, 9.5, 1);
+                ctx.stroke();
+            }
+        }
+
+        // Khi sủa (barking): khoang miệng mở ra dứt khoát
         Rectangle {
-            id: mouthHole
-            width: mouthRoot.isBarking ? 13 : (mouthRoot.dogState === "sleeping" ? 0 : 7)
-            height: mouthRoot.isBarking ? 9 : (mouthRoot.dogState === "sleeping" ? 0 : 3.5)
-            radius: mouthRoot.isBarking ? 4.5 : 1.8; color: "#450A0A"
-            anchors.horizontalCenter: parent.horizontalCenter; y: 8
-            visible: mouthRoot.dogState !== "sleeping"
-
-            Behavior on height { NumberAnimation { duration: 45; easing.type: Easing.OutQuad } }
-            Behavior on width { NumberAnimation { duration: 45; easing.type: Easing.OutQuad } }
-
+            id: barkMouth
+            visible: mouthRoot.isBarking
+            width: 11; height: 6; radius: 3; color: "#450A0A"
+            anchors.horizontalCenter: parent.horizontalCenter; y: 8.5
             Rectangle {
-                width: parent.width * 0.75; height: 5; radius: 2.5; color: "#FB7185"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom; anchors.bottomMargin: -2
-                x: mouthRoot.tongueVibrate
-                Rectangle { width: 1; height: 3; color: "#E11D48"; anchors.centerIn: parent }
+                width: 7; height: 3.5; radius: 1.75; color: "#FB7185"
+                anchors.horizontalCenter: parent.horizontalCenter; anchors.bottom: parent.bottom; anchors.bottomMargin: 0.5
             }
         }
     }

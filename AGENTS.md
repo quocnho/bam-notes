@@ -4,14 +4,11 @@
 > Đọc tài liệu này trước để định tuyến trực tiếp đến đúng file cần sửa.
 > Tuân thủ nghiêm ngặt **Clean Architecture, Atomic Micro-Modules (< 80 dòng/file QML/Nix, < 100 dòng/file C++)** và **Quy trình Refine/Reframe Prompt**.
 
-## 1. Cơ Chế Bắt Buộc: Refine & Reframe Prompt Yêu Cầu
+## 1. Cơ Chế Bắt Buộc: Refine & Reframe Prompt Chuyên Gia Hàng Đầu
 Mỗi khi nhận yêu cầu từ người dùng, AI Agent PHẢI:
-1. **Refine & Reframe**: Tinh chỉnh và diễn đạt lại yêu cầu theo phong cách chuyên nghiệp:
-   - **Mục tiêu kỹ thuật (Goal)**.
-   - **Phạm vi tác động (Scope & Affected Components)**.
-   - **Giải pháp thiết kế & luồng dữ liệu (Architecture/Dataflow)**.
-   - **Tiêu chuẩn nghiệm thu (Definition of Done - DoD)**.
-2. **Xác nhận hoặc Thực thi sắc bén**: Nếu tác vụ phức tạp/phân nhánh, xin xác nhận; nếu rõ ràng, trình bày khung reframing trước khi thực hiện vi phẫu mã nguồn.
+1. **Đọc hiểu & Phân tích chuyên sâu**: Đóng vai trò Chuyên gia Hàng đầu Thế giới trong lĩnh vực liên quan để đối chuẩn công nghệ và giải pháp tối ưu.
+2. **Refine & Reframe thành Kế hoạch chi tiết**: Trình bày dưới dạng User Story, phân rã công việc (Tasks), phạm vi tác động (Scope & Affected Components) và Tiêu chuẩn nghiệm thu (DoD).
+3. **Cổng Xác Nhận (Confirmation Gate)**: BẮT BUỘC gửi kế hoạch chi tiết cho người dùng xem và xin xác nhận. Chỉ tiến hành sửa đổi mã nguồn hoặc can thiệp hệ thống sau khi nhận được sự đồng ý.
 
 ## 2. Directory Structure Map (Clean Architecture)
 

@@ -46,6 +46,7 @@ qt_add_qml_module(bam-troly
         qml/mascot/behaviors/HoverGreetingFlow.qml
         qml/mascot/behaviors/PlayfulBehavior.qml
         qml/mascot/behaviors/MascotInteractionController.qml
+        qml/mascot/behaviors/DogEarBehavior.qml
         qml/mascot/behaviors/IntroRunner.qml
         qml/chat/ChatWindow.qml
         qml/chat/FloatingChatWindow.qml

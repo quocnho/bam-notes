@@ -19,7 +19,7 @@ Item {
                 } else {
                     var isLeft = Math.random() < 0.5;
                     playfulRoot.mascotRig.isLeftPawAction = isLeft;
-                    tiltAnim.to = isLeft ? -14 : 14;
+                    tiltAnim.to = isLeft ? -20 : 20;
                     pawActionAnim.restart();
                 }
             }
@@ -31,9 +31,9 @@ Item {
     SequentialAnimation {
         id: pawActionAnim
         ParallelAnimation {
-            NumberAnimation { target: playfulRoot.mascotRig; property: "randomPawLift"; to: 10; duration: 220; easing.type: Easing.OutBack }
-            NumberAnimation { id: tiltAnim; target: playfulRoot.mascotRig; property: "headTilt"; duration: 220; easing.type: Easing.OutBack }
-            NumberAnimation { target: playfulRoot.mascotRig; property: "squashY"; to: 1.06; duration: 220; easing.type: Easing.OutSine }
+            NumberAnimation { target: playfulRoot.mascotRig; property: "randomPawLift"; to: 15; duration: 240; easing.type: Easing.OutBack }
+            NumberAnimation { id: tiltAnim; target: playfulRoot.mascotRig; property: "headTilt"; duration: 240; easing.type: Easing.OutBack }
+            NumberAnimation { target: playfulRoot.mascotRig; property: "squashY"; to: 1.08; duration: 240; easing.type: Easing.OutSine }
         }
         PauseAnimation { duration: 650 }
         ParallelAnimation {

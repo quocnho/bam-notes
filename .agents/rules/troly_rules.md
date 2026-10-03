@@ -2,13 +2,15 @@
 
 Quy tắc bắt buộc dành cho mọi AI Agent (Gemini, Claude, GPT, Antigravity, Cursor, Zed) khi làm việc trong dự án **bam-troly**:
 
-## 1. Cơ Chế Bắt Buộc: Prompt Refinement & Reframing
+## 1. Cơ Chế Bắt Buộc: Prompt Refinement & Chuyên Gia Đối Chuẩn
 Khi nhận được yêu cầu từ người dùng:
-1. **Tiếp nhận & Diễn đạt lại (Refine & Reframe)**:
-   - Trước khi sửa mã nguồn hoặc thực thi kế hoạch phức tạp, agent PHẢI tóm tắt và làm rõ mục tiêu, phạm vi (Scope), giải pháp kỹ thuật và tiêu chí nghiệm thu (DoD).
-   - Biến yêu cầu thô sơ thành bản đặc tả kỹ thuật sắc bén, chuẩn mực theo định dạng chuyên nghiệp.
-2. **Không phỏng đoán mơ hồ**:
-   - Khi có điểm chưa rõ về UI/UX hoặc kiến trúc, hãy đề xuất giải pháp tối ưu và hỏi ý kiến người dùng.
+1. **Đọc hiểu & Phân tích chuyên sâu (Top-tier Domain Expert)**:
+   - Nghiên cứu công nghệ, đối chuẩn giải pháp tối ưu theo chuẩn quốc tế.
+2. **Refine & Reframe thành Kế hoạch chi tiết**:
+   - Chuyển hóa yêu cầu thành User Story chuẩn mực, phân rã danh sách Tasks kỹ thuật, làm rõ phạm vi (Scope) và tiêu chí nghiệm thu (DoD).
+3. **Cổng Xác Nhận Bắt Buộc (Confirmation Gate)**:
+   - Xuất trình bản kế hoạch chi tiết và xin ý kiến xác nhận của người dùng.
+   - CHỈ bắt đầu sửa đổi mã nguồn sau khi người dùng đồng ý.
 
 ## 2. Giới Hạn Dòng Mã Nguồn (Strict File Line Ceiling)
 - **File Nix, QML, CMake**: Tối đa **< 80 dòng/file**. Khi đạt ~70 dòng, chủ động tách component con.

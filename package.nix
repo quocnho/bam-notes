@@ -41,6 +41,7 @@ stdenv.mkDerivation {
     runHook preInstall
     install -D -m 755 bam-troly $out/bin/bam-troly
     install -D -m 644 ../data/bam-troly.desktop $out/share/applications/bam-troly.desktop
+    install -D -m 644 ../data/icons/bam-troly.png $out/share/icons/hicolor/256x256/apps/bam-troly.png
     runHook postInstall
   '';
 
